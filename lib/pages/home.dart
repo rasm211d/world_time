@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -14,42 +14,67 @@ class _HomeState extends State<Home> {
     data = ModalRoute.of(context).settings.arguments;
     print(data);
 
+    //set background
+    String bgImage = data["isDayTime"] ? "assets/day.png" : "assets/night.png";
+
+
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 120.0, 0 ,0),
-        child: SafeArea(
-          child: Column(
-            children: <Widget>[
-              FlatButton.icon(
-                onPressed: () {
-                  Navigator.pushNamed(context, "/location");
-                },
-                icon: Icon(Icons.edit_location),
-                label: Text("Edit Location"),
-              ),
-              SizedBox(height: 20,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+      body: SafeArea(
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(bgImage),
+              fit: BoxFit.cover,
+            )
+          ),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(0, 120.0, 0 ,0),
+            child: SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
+                  FlatButton.icon(
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/location");
+                    },
+                    icon: Icon(
+                      Icons.edit_location,
+                      color: Colors.white,
+                    ),
+                    label: Text(
+                      "Change Location",
+                      style: TextStyle(
+                          color: Colors.white
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        data["location"],
+                        style: TextStyle(
+                          fontSize: 28,
+                          letterSpacing: 2,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Text(
-                    data["location"],
+                    data["time"],
                     style: TextStyle(
-                      fontSize: 28,
-                      letterSpacing: 2
+                      fontSize: 66.0,
+                      color: Colors.white
                     ),
                   ),
                 ],
               ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                data["time"],
-                style: TextStyle(
-                  fontSize: 66.0,
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),
